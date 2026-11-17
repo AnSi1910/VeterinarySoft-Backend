@@ -1,0 +1,19 @@
+digraph ER {
+  graph [rankdir=TB, bgcolor="white", pad="0.2", nodesep="0.6", ranksep="0.7", fontname="DejaVu Sans"];
+  node [shape=record, style="rounded,filled", fillcolor="#E8F4FB", color="#138CC4", fontname="DejaVu Sans", fontsize=12, penwidth=1.2];
+  edge [fontname="DejaVu Sans", fontsize=10, arrowsize=.7, color="#4F6372"];
+  users [label="{users|id · PK\lemail · UNIQUE\lfull_name\lpassword_hash\lrole\l}"];
+  pets [label="{pets|id · PK\lowner_id · FK\lname / species / breed\lbirth_date\l}"];
+  vets [label="{veterinarians|id · PK\lfull_name\lspecialization\lis_active\l}"];
+  appts [label="{appointments|id · PK\lpet_id · FK\lveterinarian_id · FK\lstarts_at\lstatus / reason\l}"];
+  records [label="{medical_records|id · PK\lpet_id · FK\lveterinarian_id · FK\lvisit_date\ldiagnosis / treatment\l}"];
+  reminders [label="{reminders|id · PK\lpet_id · FK\ltitle / remind_at\lstatus\l}"];
+  {rank=same; users; vets}
+  {rank=same; appts; records; reminders}
+  users -> pets [label="1 → N"];
+  pets -> appts [label="1 → N"];
+  vets -> appts [label="1 → N"];
+  pets -> records [label="1 → N"];
+  vets -> records [label="0..1 → N", style=dashed];
+  pets -> reminders [label="1 → N"];
+}
